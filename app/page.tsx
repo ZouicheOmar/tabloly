@@ -1,14 +1,21 @@
 /** @format */
-import Image from "next/image"
-import INPUT from "./components/INPUT"
+import List from "./components/List"
+import CreateTable from "./components/CreateTable"
+import SelectFromList from "./components/SelectFromList"
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="w-full">
-        <p>Tably</p>
-        <INPUT />
+    <>
+      <div className="w-full flex flex-col gap-4">
+        <div className="p-2 w-full flex justify-between items-center ">
+          <span className="text-lg font-medium">TABLOLY</span>
+          <div className="flex gap-2 items-center">
+            <SelectFromList />
+            <CreateTable />
+          </div>
+        </div>
+        <List />
       </div>
-    </main>
+    </>
   )
 }
