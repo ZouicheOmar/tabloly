@@ -82,6 +82,9 @@ export default function AddCol() {
               <SelectContent>
                 <SelectItem value="string">text</SelectItem>
                 <SelectItem value="number">number</SelectItem>
+                <SelectItem value="url">url</SelectItem>
+                <SelectItem value="date">date</SelectItem>
+                <SelectItem value="checkbox">checkbox</SelectItem>
               </SelectContent>
             </Select>
           </div>

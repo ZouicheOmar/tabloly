@@ -30,14 +30,37 @@ export const tableStore = create(
       }),
     addCol: (colName, dataType) =>
       set((state) => {
-        state.rows.map(
-          (item) => (item[colName] = dataType === "string" ? "/" : 0)
-        )
+        // state.rows.map(
+        //   (item) => (item[colName] = dataType === "string" ? "/" : 0)
+        // )
+        if (dataType === "string") {
+          state.rows.map((item) => (item[colName] = "/"))
+        }
+        if (dataType === "number") {
+          state.rows.map((item) => (item[colName] = 0))
+        }
+        if (dataType === "date") {
+          const date = new Date()
+          let month = date.getMonth()
+          if (month.toString().length === 1) {
+            month = "0" + month
+          }
+          const str = `${date.getFullYear()}-${month}-${date.getDate()}`
+
+          state.rows.map((item) => (item[colName] = str))
+        }
+        if (dataType === "checkbox") {
+          state.rows.map((item) => (item[colName] = false))
+        }
+        if (dataType === "url") {
+          state.rows.map((item) => (item[colName] = "https://"))
+        }
         state.columns.push({
           name: colName,
           type: dataType,
         })
       }),
+
     addRow: () =>
       set((state) => {
         let emptyRow = {}
@@ -45,17 +68,36 @@ export const tableStore = create(
         const cols = get().columns
         //add id
         for (let i = 0; i < cols.length; i++) {
-          if (cols[i].type === "string") {
-            emptyRow = {...emptyRow, [cols[i].name]: "/"}
-          } else if (cols[i].type === "number") {
+          const type = cols[i].type
+          if (type === "string") {
+            emptyRow = {...emptyRow, [cols[i].name]: ""}
+          }
+          if (type === "number") {
             emptyRow = {...emptyRow, [cols[i].name]: 0}
           }
+          if (type === "checkbox") {
+            emptyRow = {...emptyRow, [cols[i].name]: false}
+          }
+          if (type === "date") {
+            const date = new Date()
+            let month = date.getMonth()
+            if (month.toString().length === 1) {
+              month = "0" + month
+            }
+            const str = `${date.getFullYear()}-${month}-${date.getDate()}`
+            emptyRow = {...emptyRow, [cols[i].name]: str}
+          }
+          if (type === "url") {
+            emptyRow = {...emptyRow, [cols[i].name]: ""}
+          }
         }
+        //define for other type of data
         emptyRow = {id: id, ...emptyRow}
 
         state.rows.push(emptyRow)
       }),
     setCell: (index, col, data, type) => {
+      console.log(data)
       set((state) => {
         if (type === "number") {
           state.rows[index][col] = Number(data)

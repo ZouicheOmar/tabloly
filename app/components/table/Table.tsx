@@ -39,8 +39,8 @@ export default function Table({path}) {
         <TableControls />
       </div>
       {columns.length > 0 ? (
-        <div className="rounded-md border overflow-hidden">
-          <ShadcnTable>
+        <div className="rounded-md border overflow-auto ">
+          <ShadcnTable className="min-w-[1000px]">
             <TableHeader>
               <TableRow>
                 {selectMode && (
@@ -60,7 +60,7 @@ export default function Table({path}) {
             </TableHeader>
             <TableBody>
               {rows.map((item, index) => (
-                <TableRow key={index}>
+                <TableRow key={index} className="divide-x-2">
                   {selectMode && (
                     <TableCell role="checkbox">
                       <Checkbox
@@ -76,6 +76,7 @@ export default function Table({path}) {
                   {Object.keys(item).map(
                     (iitem, iindex) =>
                       //if diffrent than id
+                      //another way to assign each cell to the right columns
                       iitem !== "id" && (
                         <Cell
                           item={item}
