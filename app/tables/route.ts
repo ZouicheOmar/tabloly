@@ -19,13 +19,15 @@ export async function GET(request: Request) {
     const name = JSON.parse(fileData).name
     const description = JSON.parse(fileData).description
 
-    list.push({
-      path: file,
-      name: name,
-      description: description,
-      birthtime: stat.birthtime,
-      mtime: stat.mtime,
-    })
+    if (file !== "usul.json") {
+      list.push({
+        path: file,
+        name: name,
+        description: description,
+        birthtime: stat.birthtime,
+        mtime: stat.mtime,
+      })
+    }
   })
 
   return NextResponse.json(
