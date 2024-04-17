@@ -56,7 +56,7 @@ export default function Table({path}) {
             </TableHeader>
             <TableBody>
               {rows.map((row, rowindex) => (
-                <TableRow key={rowindex} className="divide-x-2">
+                <TableRow key={rowindex} className="divide-x-[1px]">
                   {selectMode && (
                     <TableCell role="checkbox">
                       <Checkbox
