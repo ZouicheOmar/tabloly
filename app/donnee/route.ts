@@ -19,18 +19,19 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const json = await request.json()
-  console.log(json)
   fs.writeFileSync(
     "app/donnee/tables/tableA.json",
     JSON.stringify(json),
     (err) => {
       console.log(err)
-      return NextResponse.json(
-        {
-          message: "problem saving data",
-        },
-        {status: 400}
-      )
+
+      //what's this ??
+      // return NextResponse.json(
+      //   {
+      //     message: "problem saving data",
+      //   },
+      //   {status: 400}
+      // )
     }
   )
   return NextResponse.json(

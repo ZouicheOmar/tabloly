@@ -2,7 +2,6 @@
 "use client"
 
 import useTable from "@/app/hooks/useTable"
-import {Suspense} from "react"
 import {tableStore} from "@/app/stores/tableStore"
 
 import Cell from "./components/Cell"
@@ -19,8 +18,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {CheckboxIcon} from "@radix-ui/react-icons"
-import TableSkeleton from "./components/TableSkeleton"
 
 export default function Table({path}) {
   useTable(path)
@@ -30,7 +27,6 @@ export default function Table({path}) {
   const selectRow = tableStore((state) => state.selectRow)
   const selectedRows = tableStore((state) => state.selectedRows)
   const selectAllRows = tableStore((state) => state.selectAllRows)
-  const deleteSelectedRows = tableStore((state) => state.deleteSelectedRows)
 
   return (
     <>
@@ -59,31 +55,31 @@ export default function Table({path}) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {rows.map((item, index) => (
-                <TableRow key={index} className="divide-x-2">
+              {rows.map((row, rowindex) => (
+                <TableRow key={rowindex} className="divide-x-2">
                   {selectMode && (
                     <TableCell role="checkbox">
                       <Checkbox
-                        onCheckedChange={() => selectRow(item)}
+                        onCheckedChange={() => selectRow(row)}
                         checked={
                           selectedRows.findIndex(
-                            (selectedRow) => selectedRow.id === item.id
+                            (selectedRow) => selectedRow.id === row.id
                           ) !== -1
                         }
                       />
                     </TableCell>
                   )}
-                  {Object.keys(item).map(
-                    (iitem, iindex) =>
+                  {Object.keys(row).map(
+                    (prop, pindex) =>
                       //if diffrent than id
                       //another way to assign each cell to the right columns
-                      iitem !== "id" && (
+                      prop !== "id" && (
                         <Cell
-                          item={item}
-                          iitem={iitem}
-                          index={index}
-                          iindex={iindex}
-                          key={iindex}
+                          row={row}
+                          prop={prop}
+                          rowindex={rowindex}
+                          pindex={pindex}
+                          key={pindex}
                         />
                       )
                   )}

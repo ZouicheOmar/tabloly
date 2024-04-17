@@ -8,17 +8,23 @@ import {Button} from "@/components/ui/button"
 import TableSelectControls from "./TableSelectControls"
 import SaveButton from "./SaveButton"
 
-export default function TableControls() {
+const StateButton = () => {
   const getState = tableStore((state) => state.getState)
 
+  return (
+    <Button variant="outline" onPointerDown={getState}>
+      state
+    </Button>
+  )
+}
+
+export default function TableControls() {
   return (
     <div className="flex gap-2">
       <TableSelectControls />
       <AddRow />
       <AddCol />
-      <Button variant="outline" onPointerDown={getState}>
-        state
-      </Button>
+      {/* <StateButton /> */}
       <SaveButton />
     </div>
   )

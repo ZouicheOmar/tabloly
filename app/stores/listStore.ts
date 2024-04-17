@@ -1,7 +1,5 @@
 /** @format */
 
-import {staticGenerationAsyncStorage} from "next/dist/client/components/static-generation-async-storage.external"
-import {Staatliches, Stardos_Stencil} from "next/font/google"
 import {create} from "zustand"
 import {immer} from "zustand/middleware/immer"
 
@@ -70,10 +68,6 @@ export const listStore = create(
             state.selected = []
             state.selectMode = false
           })
-          //remove selected from files
-          //clean selected
-          // turn off select mode
-          console.log(json)
         })
         .catch((err) => {
           console.log(err)

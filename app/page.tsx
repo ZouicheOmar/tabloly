@@ -2,7 +2,6 @@
 import List from "./components/List"
 import CreateTable from "./components/CreateTable"
 import SelectFromList from "./components/SelectFromList"
-import InputTypes from "./components/inputtypes"
 
 export default function Home() {
   return (
@@ -16,7 +15,6 @@ export default function Home() {
           </div>
         </div>
         <List />
-        {/* <InputTypes /> */}
       </div>
     </>
   )

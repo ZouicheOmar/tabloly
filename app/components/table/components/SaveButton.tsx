@@ -12,7 +12,7 @@ export default function SaveButton() {
     setLoading(true)
     saveData()
       .then((res) => setTimeout(() => setLoading(false), 300))
-      .catch((err) => console.log("cant catch it"))
+      .catch((err) => console.log("err"))
   }
 
   return (

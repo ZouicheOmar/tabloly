@@ -11,11 +11,9 @@ export default function useTable(path: string) {
   const setName = tableStore((state) => state.setName)
 
   return useEffect(() => {
-    // fetch(`/donnee/${path}.json`)
     fetch(`/donnee/${path}`)
       .then(async (res) => {
         const json = await res.json()
-        console.log("path", path)
         setPath(path)
         setName(JSON.parse(json.table).name)
         setCols(JSON.parse(json.table).columns)

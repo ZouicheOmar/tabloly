@@ -53,7 +53,7 @@ export const tableStore = create(
           state.rows.map((item) => (item[colName] = false))
         }
         if (dataType === "url") {
-          state.rows.map((item) => (item[colName] = "https://"))
+          state.rows.map((item) => (item[colName] = ""))
         }
         state.columns.push({
           name: colName,
@@ -97,7 +97,6 @@ export const tableStore = create(
         state.rows.push(emptyRow)
       }),
     setCell: (index, col, data, type) => {
-      console.log(data)
       set((state) => {
         if (type === "number") {
           state.rows[index][col] = Number(data)
@@ -107,21 +106,10 @@ export const tableStore = create(
       })
     },
 
-    // saveData : async (newCols, newRows) => {
     saveData: async () => {
-      //path is missing
-
-      // const data = JSON.stringify({
-      //   columns: newCols,
-      //   rows: newRows,
-      //   path: path,
-      // })
-
       const cols = get().columns
       const rows = get().rows
       const path = get().path
-
-      console.log("path", path)
 
       const data = JSON.stringify({
         columns: cols,
@@ -138,7 +126,6 @@ export const tableStore = create(
       })
         .then(async (res) => {
           const json = await res.json()
-          console.log(json)
           return true
         })
         .catch((err) => {
@@ -152,7 +139,6 @@ export const tableStore = create(
     },
     selectMode: false,
     selectedRows: [],
-    //modify setSelectMode accordinlgy
     setSelectMode: () => {
       set((state) => {
         state.selectMode = !state.selectMode
