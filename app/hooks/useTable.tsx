@@ -2,8 +2,6 @@
 import {useEffect} from "react"
 import {tableStore} from "../stores/tableStore"
 
-import {useRouter} from "next/router"
-
 export default function useTable(path: string) {
   const setCols = tableStore((state) => state.setCols)
   const setRows = tableStore((state) => state.setRows)

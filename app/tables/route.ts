@@ -2,7 +2,6 @@
 
 import {NextResponse} from "next/server"
 import fs from "fs"
-import {staticGenerationAsyncStorage} from "next/dist/client/components/static-generation-async-storage.external"
 
 export async function GET(request: Request) {
   let list = []

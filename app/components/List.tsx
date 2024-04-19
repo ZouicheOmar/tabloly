@@ -1,7 +1,7 @@
 /** @format */
 
 "use client"
-import {useEffect, useState} from "react"
+import {useEffect} from "react"
 import {listStore} from "../stores/listStore"
 
 import TableCard from "./TableCard"
@@ -30,7 +30,6 @@ export default function List() {
         </p>
       )}
       {list.length > 0 && (
-        // <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
         <div className="w-full grid grid-cols-2  lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {list.map((item, index) => (
             <TableCard className="" card={item} key={index} />

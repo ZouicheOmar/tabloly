@@ -4,16 +4,15 @@
 import useTable from "@/app/hooks/useTable"
 import {tableStore} from "@/app/stores/tableStore"
 
-import Cell from "./components/Cell"
 import Breadcrumb from "./components/Breadcrumb"
 import TableControls from "./components/TableControls"
 import EmptyTableMessage from "./components/EmptyTableMessage"
 
+import Row from "./components/Row"
 import {Checkbox} from "@/components/ui/checkbox"
 import {
   Table as ShadcnTable,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -24,7 +23,6 @@ export default function Table({path}) {
   const columns = tableStore((state) => state.columns)
   const rows = tableStore((state) => state.rows)
   const selectMode = tableStore((state) => state.selectMode)
-  const selectRow = tableStore((state) => state.selectRow)
   const selectedRows = tableStore((state) => state.selectedRows)
   const selectAllRows = tableStore((state) => state.selectAllRows)
 
@@ -35,10 +33,10 @@ export default function Table({path}) {
         <TableControls />
       </div>
       {columns.length > 0 ? (
-        <div className="rounded-md border overflow-auto ">
-          <ShadcnTable className="min-w-[1000px]">
+        <div className="rounded-md border w-fit overflow-auto ">
+          <ShadcnTable className="">
             <TableHeader>
-              <TableRow>
+              <TableRow className="divide-x-[1px]">
                 {selectMode && (
                   <TableHead role="checkbox">
                     <Checkbox
@@ -50,40 +48,20 @@ export default function Table({path}) {
                   </TableHead>
                 )}
                 {columns?.map((item, index) => (
-                  <TableHead key={index}>{item.name}</TableHead>
+                  <TableHead
+                    key={index}
+                    className={`${
+                      item.type === "number" ? "max-w-[100px]" : "min-w-[200px]"
+                    }`}
+                  >
+                    {item.name}
+                  </TableHead>
                 ))}
               </TableRow>
             </TableHeader>
             <TableBody>
-              {rows.map((row, rowindex) => (
-                <TableRow key={rowindex} className="divide-x-[1px]">
-                  {selectMode && (
-                    <TableCell role="checkbox">
-                      <Checkbox
-                        onCheckedChange={() => selectRow(row)}
-                        checked={
-                          selectedRows.findIndex(
-                            (selectedRow) => selectedRow.id === row.id
-                          ) !== -1
-                        }
-                      />
-                    </TableCell>
-                  )}
-                  {Object.keys(row).map(
-                    (prop, pindex) =>
-                      //if diffrent than id
-                      //another way to assign each cell to the right columns
-                      prop !== "id" && (
-                        <Cell
-                          row={row}
-                          prop={prop}
-                          rowindex={rowindex}
-                          pindex={pindex}
-                          key={pindex}
-                        />
-                      )
-                  )}
-                </TableRow>
+              {rows.map((row, index) => (
+                <Row row={row} index={index} key={index} />
               ))}
             </TableBody>
           </ShadcnTable>

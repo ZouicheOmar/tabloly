@@ -3,9 +3,10 @@ import {tableStore} from "@/app/stores/tableStore"
 import {Checkbox} from "@/components/ui/checkbox"
 
 import {TableCell} from "@/components/ui/table"
+import Textcell from "./Textcell"
 
 export default function Cell(props) {
-  const {row, prop, rowindex, pindex} = props
+  const {row, rowProp, rowIndex} = props
   const rows = tableStore((state) => state.rows)
   const columns = tableStore((state) => state.columns)
   const setCell = tableStore((state) => state.setCell)
@@ -14,29 +15,39 @@ export default function Cell(props) {
     const obj = columns.find((item) => item.name === iitem)
     return obj.type
   }
-  const type = getType(prop)
+  const type = getType(rowProp)
+  console.log(type)
 
-  return (
-    <TableCell className="p-0">
-      {type !== "checkbox" && (
-        <input
-          className="bg-inherit outline-none p-2 w-full  transition-colors"
-          type={type}
-          value={rows[rowindex][prop]}
-          onChange={(e) => setCell(rowindex, prop, e.target.value, type)}
-          checked={Boolean(row[prop])}
-          placeholder={type === "url" ? "https://" : `...`}
-        />
-      )}
-      {type === "checkbox" && (
-        <span className="flex justify-center">
+  switch (type) {
+    case "text":
+      return <Textcell rowProp={rowProp} rowIndex={rowIndex} />
+    case "checkbox":
+      return (
+        <TableCell role="checkbox p-0">
           <Checkbox
-            checked={Boolean(row[prop])}
-            value={rows[rowindex][prop]}
-            onCheckedChange={(e) => setCell(rowindex, prop, e, type)}
+            checked={Boolean(row[rowProp])}
+            value={rows[rowIndex][rowProp]}
+            onCheckedChange={(e) => setCell(rowIndex, rowProp, e, type)}
           />
-        </span>
-      )}
-    </TableCell>
-  )
+        </TableCell>
+      )
+    case "string":
+    case "url":
+    case "number":
+    case "date":
+      return (
+        <TableCell className="align-top p-0">
+          <input
+            className={`bg-inherit outline-none p-2 ${
+              type === "number" ? " max-w-[120px]" : "min-w-fit"
+            } transition-colors`}
+            type={type}
+            value={rows[rowIndex][rowProp]}
+            onChange={(e) => setCell(rowIndex, rowProp, e.target.value, type)}
+            checked={Boolean(row[rowProp])}
+            placeholder={type === "url" ? "https://" : `...`}
+          />
+        </TableCell>
+      )
+  }
 }

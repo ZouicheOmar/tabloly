@@ -80,7 +80,8 @@ export default function AddCol() {
                 <SelectValue placeholder="Select a data type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="string">text</SelectItem>
+                <SelectItem value="text">text</SelectItem>
+                <SelectItem value="string">one line text</SelectItem>
                 <SelectItem value="number">number</SelectItem>
                 <SelectItem value="url">url</SelectItem>
                 <SelectItem value="date">date</SelectItem>

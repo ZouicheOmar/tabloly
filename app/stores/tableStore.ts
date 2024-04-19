@@ -30,9 +30,13 @@ export const tableStore = create(
       }),
     addCol: (colName, dataType) =>
       set((state) => {
+        console.log(`trying to create ${colName} of type ${dataType}`)
         // state.rows.map(
         //   (item) => (item[colName] = dataType === "string" ? "/" : 0)
         // )
+        if (dataType === "text") {
+          state.rows.map((item) => (item[colName] = "/"))
+        }
         if (dataType === "string") {
           state.rows.map((item) => (item[colName] = "/"))
         }
@@ -69,6 +73,9 @@ export const tableStore = create(
         //add id
         for (let i = 0; i < cols.length; i++) {
           const type = cols[i].type
+          if (type === "text") {
+            emptyRow = {...emptyRow, [cols[i].name]: ""}
+          }
           if (type === "string") {
             emptyRow = {...emptyRow, [cols[i].name]: ""}
           }
@@ -134,8 +141,10 @@ export const tableStore = create(
         })
     },
     getState: () => {
-      const state = tableStore.getState().selectedRows
-      console.log(state)
+      const cols = tableStore.getState().columns
+      const rows = tableStore.getState().rows
+      console.log(cols)
+      console.log(rows)
     },
     selectMode: false,
     selectedRows: [],
